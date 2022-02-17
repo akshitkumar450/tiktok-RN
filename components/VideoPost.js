@@ -16,8 +16,17 @@ const VideoPost = ({
 }) => {
   const videoRef = useRef();
   const [status, setStatus] = useState({});
+  const [like, setLike] = useState(likes);
+  const [isliked, setIsliked] = useState(false);
+
+  const onLikeChange = () => {
+    const likeToAdd = isliked ? -1 : 1;
+    setLike(like + likeToAdd);
+    setIsliked(!isliked);
+  };
   return (
-    <View style={[tw`w-full`, { height: Dimensions.get("screen").height }]}>
+    <View
+      style={[tw`w-full`, { height: Dimensions.get("window").height - 80 }]}>
       <Pressable
         onPress={() =>
           status.isPlaying
@@ -26,7 +35,7 @@ const VideoPost = ({
         }>
         <Video
           ref={videoRef}
-          style={[tw` w-full `, { height: Dimensions.get("screen").height }]}
+          style={[tw` w-full `, { height: Dimensions.get("window").height }]}
           source={{
             uri: videoUri,
           }}
@@ -70,10 +79,16 @@ const VideoPost = ({
             }}
           />
         </View>
-        <View style={tw`items-center mt-5`}>
-          <AntDesign name="heart" size={24} color="white" />
-          <Text style={tw`text-white`}>{likes}</Text>
-        </View>
+        <Pressable onPress={onLikeChange}>
+          <View style={tw`items-center mt-5`}>
+            <AntDesign
+              name="heart"
+              size={24}
+              color={isliked ? "red" : "white"}
+            />
+            <Text style={tw`text-white`}>{like}</Text>
+          </View>
+        </Pressable>
         <View style={tw`items-center my-4`}>
           <FontAwesome5 name="comment-dots" size={24} color="white" />
           <Text style={tw`text-white`}>{comments}</Text>

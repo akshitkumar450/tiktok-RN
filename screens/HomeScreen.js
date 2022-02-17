@@ -4,7 +4,8 @@ import VideoPost from "../components/VideoPost";
 import posts from "../assets/posts";
 import tw from "tailwind-react-native-classnames";
 const HomeScreen = () => {
-  const height = Dimensions.get("window").height;
+  // height of a single video
+  const height = Dimensions.get("window").height - 80;
   const viewConfigRef = useRef({
     itemVisiblePercentThreshold: 50,
     // minimumViewTime: 300, //time
@@ -14,8 +15,8 @@ const HomeScreen = () => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posts}
-        snapToAlignment="center"
-        decelerationRate="fast" //to move to next speed
+        snapToAlignment={"start"}
+        decelerationRate={"fast"} //to move to next speed
         snapToInterval={height} //for autosnap
         viewabilityConfig={viewConfigRef.current}
         renderItem={({ item }) => (
